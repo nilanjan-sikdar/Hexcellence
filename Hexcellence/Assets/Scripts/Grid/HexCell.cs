@@ -92,7 +92,6 @@ public class HexCell : MonoBehaviour
     {
         this.q = q;
         this.r = r;
-        currentValue = 0;
         isHighlighted = false;
 
         gameObject.name = $"HexCell [{q}, {r}]";
@@ -101,10 +100,9 @@ public class HexCell : MonoBehaviour
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
 
-        spriteRenderer.color = defaultColor;
+        // This will fire OnCellValueChanged, allowing CellVisualController to color it correctly as an empty cell
+        SetValue(0);
 
-        // Hide number text initially.
-        UpdateNumberDisplay();
     }
 
     // ───────────────────────── State Management ─────────────────────────
@@ -140,15 +138,15 @@ public class HexCell : MonoBehaviour
     {
         if (numberText == null) return;
 
-        if (currentValue > 0)
+        if (currentValue == 0)
         {
-            numberText.gameObject.SetActive(true);
-            numberText.text = currentValue.ToString();
+            spriteRenderer.color = defaultColor;
+            if (numberText != null) numberText.text = "";
         }
         else
         {
-            numberText.gameObject.SetActive(false);
-            numberText.text = "";
+            numberText.gameObject.SetActive(true);
+            numberText.text = currentValue.ToString();
         }
     }
 

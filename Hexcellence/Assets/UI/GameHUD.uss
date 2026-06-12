@@ -1,101 +1,16 @@
 /* ============================================================
-   Hexcellence – Game HUD Stylesheet
-   Premium dark glassmorphism theme
+   Hexcellence – Game HUD Stylesheet (Minimalist)
    ============================================================ */
 
-/* ── CSS Variables ─────────────────────────────────────────── */
 :root {
-    --color-primary: #e94560;
-    --color-accent: #16c79a;
-    --color-bg: #1a1a2e;
-    --color-bg-transparent: rgba(26, 26, 46, 0.85);
-    --color-text: #ffffff;
-    --color-text-dim: #a0a0b0;
-    --color-card-border: #e94560;
+    --color-text: #000000;
+    --color-text-red: #cc0000;
 }
 
-/* ── Root Container ────────────────────────────────────────── */
 .root {
     width: 100%;
     height: 100%;
     flex-direction: column;
-    picking-mode: Ignore;
-}
-
-/* ── Top Bar ───────────────────────────────────────────────── */
-.top-bar {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--color-bg-transparent);
-    padding: 12px 20px;
-    border-bottom-width: 2px;
-    border-bottom-color: rgba(233, 69, 96, 0.3);
-    picking-mode: Ignore;
-}
-
-.game-title {
-    font-size: 28px;
-    -unity-font-style: bold;
-    color: var(--color-text);
-    letter-spacing: 6px;
-    picking-mode: Ignore;
-}
-
-/* ── Score ──────────────────────────────────────────────────── */
-.score-container {
-    flex-direction: column;
-    align-items: flex-end;
-    picking-mode: Ignore;
-}
-
-.score-label {
-    font-size: 12px;
-    color: var(--color-text-dim);
-    letter-spacing: 3px;
-    -unity-font-style: bold;
-    picking-mode: Ignore;
-}
-
-.score-value {
-    font-size: 36px;
-    -unity-font-style: bold;
-    color: var(--color-accent);
-    picking-mode: Ignore;
-}
-
-/* ── Spacer ─────────────────────────────────────────────────── */
-.spacer {
-    flex-grow: 1;
-    picking-mode: Ignore;
-}
-
-/* ── Bottom Panel ──────────────────────────────────────────── */
-.bottom-panel {
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-transparent);
-    padding: 14px 20px;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    border-top-width: 2px;
-    border-top-color: rgba(22, 199, 154, 0.3);
-    picking-mode: Ignore;
-}
-
-.piece-counter {
-    font-size: 18px;
-    color: var(--color-text);
-    -unity-font-style: bold;
-    margin-bottom: 4px;
-    picking-mode: Ignore;
-}
-
-.rotate-hint {
-    font-size: 14px;
-    color: var(--color-text-dim);
-    -unity-font-style: italic;
-    picking-mode: Ignore;
 }
 
 /* ── Game Over Overlay ─────────────────────────────────────── */
@@ -105,71 +20,47 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.75);
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    display: none;
-    transition-property: opacity;
-    transition-duration: 0.4s;
+    padding-bottom: 50px;
+    display: none; /* Controlled by UIManager */
 }
 
 .game-over-card {
-    background-color: var(--color-bg);
-    border-radius: 20px;
-    border-width: 2px;
-    border-color: var(--color-card-border);
-    padding: 36px 48px;
+    background-color: #dcdcdc; /* Light gray box */
+    border-radius: 12px;
+    padding: 20px 40px;
     align-items: center;
-    min-width: 280px;
-}
-
-.game-over-title {
-    font-size: 38px;
-    -unity-font-style: bold;
-    color: var(--color-primary);
-    letter-spacing: 4px;
-    margin-bottom: 20px;
-}
-
-.game-over-score-section {
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 28px;
+    min-width: 200px;
 }
 
 .game-over-score-label {
     font-size: 16px;
-    color: var(--color-text-dim);
-    letter-spacing: 2px;
-    -unity-font-style: bold;
+    color: var(--color-text);
+    -unity-text-align: middle-center;
+    margin-bottom: 5px;
 }
 
 .final-score-value {
-    font-size: 52px;
+    font-size: 24px;
     -unity-font-style: bold;
-    color: var(--color-accent);
+    color: var(--color-text);
+    -unity-text-align: middle-center;
+    margin-bottom: 20px;
 }
 
 /* ── Restart Button ────────────────────────────────────────── */
 .restart-button {
-    background-color: var(--color-primary);
-    color: var(--color-text);
-    font-size: 20px;
-    -unity-font-style: bold;
-    border-radius: 12px;
-    padding: 14px 56px;
+    background-color: transparent;
+    color: var(--color-text-red);
+    font-size: 22px;
     border-width: 0;
-    cursor: link;
-    transition-property: background-color, scale;
-    transition-duration: 0.2s;
 }
 
 .restart-button:hover {
-    background-color: #ff5a7a;
-    scale: 1.05 1.05;
+    color: #ff0000;
 }
 
 .restart-button:active {
-    background-color: #c73550;
-    scale: 0.97 0.97;
+    color: #990000;
 }

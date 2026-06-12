@@ -127,6 +127,42 @@ public class PlacementValidator : MonoBehaviour
         return cell.CurrentValue == 0 || cell.CurrentValue == value;
     }
 
+    // ───────────────────────── Game Over Checking ────────────────────────
+
+    /// <summary>
+    /// Checks if there is ANY valid placement left on the board for a given 2-tile piece.
+    /// Evaluates all grid cells and all 6 possible rotations.
+    /// </summary>
+    /// <param name="valueA">Number value of tile A.</param>
+    /// <param name="valueB">Number value of tile B.</param>
+    /// <returns><c>true</c> if at least one valid move exists; otherwise <c>false</c>.</returns>
+    public bool HasAnyValidMove(int valueA, int valueB)
+    {
+        Vector2Int[] directions = HexGridManager.GetNeighborDirections();
+        
+        foreach (var kvp in gridManager.Cells)
+        {
+            Vector2Int coordA = kvp.Key;
+            
+            // Check if tile A can be placed here
+            if (IsSingleCellValid(coordA, valueA))
+            {
+                // Check all 6 rotations for tile B
+                for (int i = 0; i < 6; i++)
+                {
+                    Vector2Int coordB = coordA + directions[i];
+                    
+                    if (IsSingleCellValid(coordB, valueB))
+                    {
+                        return true; // Found a valid move!
+                    }
+                }
+            }
+        }
+        
+        return false; // No valid moves found anywhere
+    }
+
     #endregion
 }
 

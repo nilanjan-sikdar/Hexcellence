@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private float dragYOffset = 1.5f;
 
     [Tooltip("Minimum pointer movement (in screen pixels) before a tap becomes a drag.")]
-    [SerializeField] private float dragThreshold = 15f;
+    [SerializeField] private float dragThreshold = 40f;
 
     [Tooltip("The camera used for screen-to-world conversion.")]
     [SerializeField] private Camera gameCamera;
@@ -67,6 +67,9 @@ public class InputManager : MonoBehaviour
     {
         if (gameCamera == null)
             gameCamera = Camera.main;
+            
+        // Force a reasonable threshold to prevent tapping from immediately turning into dragging on high-DPI screens
+        if (dragThreshold < 40f) dragThreshold = 40f;
     }
 
     private void Update()
@@ -106,13 +109,9 @@ public class InputManager : MonoBehaviour
 
             if (!isDragging && distance > dragThreshold)
             {
-                // Crossed drag threshold — check if we started on the piece
-                Vector3 downWorldPos = ScreenToWorldPosition(pointerDownScreenPos);
-                if (IsPointerOverPiece(downWorldPos))
-                {
-                    isDragging = true;
-                    OnDragStarted?.Invoke();
-                }
+                // Crossed drag threshold — drag from anywhere
+                isDragging = true;
+                OnDragStarted?.Invoke();
             }
 
             if (isDragging)
@@ -128,18 +127,15 @@ public class InputManager : MonoBehaviour
         {
             if (isDragging)
             {
-                // End drag — pass the raw world position (no Y-offset) for grid snapping
+                // End drag — pass the piece's visual position (WITH Y-offset) so grid snapping matches what the user sees
                 Vector3 worldPos = ScreenToWorldPosition(pointerPosition);
-                OnDragEnded?.Invoke(worldPos);
+                Vector3 dropPos = worldPos + Vector3.up * dragYOffset;
+                OnDragEnded?.Invoke(dropPos);
             }
             else
             {
-                // Was a tap — check if it was on the piece
-                Vector3 worldPos = ScreenToWorldPosition(pointerPosition);
-                if (IsPointerOverPiece(worldPos))
-                {
-                    OnPieceTapped?.Invoke();
-                }
+                // Was a tap — rotate piece from anywhere
+                OnPieceTapped?.Invoke();
             }
 
             isPointerDown = false;

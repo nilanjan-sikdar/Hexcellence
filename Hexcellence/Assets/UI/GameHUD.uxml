@@ -5,32 +5,11 @@
   <!-- ROOT -->
   <ui:VisualElement name="root" class="root">
 
-    <!-- TOP BAR -->
-    <ui:VisualElement name="top-bar" class="top-bar">
-      <ui:Label name="game-title" text="HEXCELLENCE" class="game-title" />
-      <ui:VisualElement name="score-container" class="score-container">
-        <ui:Label text="SCORE" class="score-label" />
-        <ui:Label name="score-value" text="0" class="score-value" />
-      </ui:VisualElement>
-    </ui:VisualElement>
-
-    <!-- SPACER (pushes bottom panel down) -->
-    <ui:VisualElement class="spacer" />
-
-    <!-- BOTTOM PANEL -->
-    <ui:VisualElement name="bottom-panel" class="bottom-panel">
-      <ui:Label name="piece-counter" text="Piece 1 / 6" class="piece-counter" />
-      <ui:Label name="rotate-hint" text="&#x21BB; Tap piece to Rotate" class="rotate-hint" />
-    </ui:VisualElement>
-
     <!-- GAME OVER OVERLAY (hidden by default) -->
     <ui:VisualElement name="game-over-container" class="game-over-container">
       <ui:VisualElement name="game-over-card" class="game-over-card">
-        <ui:Label text="GAME OVER" class="game-over-title" />
-        <ui:VisualElement class="game-over-score-section">
-          <ui:Label text="Score" class="game-over-score-label" />
-          <ui:Label name="final-score-value" text="0" class="final-score-value" />
-        </ui:VisualElement>
+        <ui:Label text="Score" class="game-over-score-label" />
+        <ui:Label name="final-score-value" text="14" class="final-score-value" />
         <ui:Button name="restart-button" text="RESTART" class="restart-button" />
       </ui:VisualElement>
     </ui:VisualElement>

@@ -19,9 +19,6 @@ public class UIManager : MonoBehaviour
 
     // ───────────────────────── Private Fields ────────────────────────────
 
-    private Label scoreValueLabel;
-    private Label pieceCounterLabel;
-    private Label rotateHintLabel;
     private VisualElement gameOverContainer;
     private Label finalScoreValueLabel;
     private Button restartButton;
@@ -70,9 +67,6 @@ public class UIManager : MonoBehaviour
 
         VisualElement root = uiDocument.rootVisualElement;
 
-        scoreValueLabel = root.Q<Label>("score-value");
-        pieceCounterLabel = root.Q<Label>("piece-counter");
-        rotateHintLabel = root.Q<Label>("rotate-hint");
         gameOverContainer = root.Q<VisualElement>("game-over-container");
         finalScoreValueLabel = root.Q<Label>("final-score-value");
         restartButton = root.Q<Button>("restart-button");
@@ -85,10 +79,6 @@ public class UIManager : MonoBehaviour
 
         // Ensure game over is hidden at start
         HideGameOver();
-
-        // Set initial values
-        UpdateScore(0);
-        UpdatePieceCounter(0, 6);
     }
 
     // ───────────────────────── Event Handlers ───────────────────────────
@@ -96,13 +86,13 @@ public class UIManager : MonoBehaviour
     /// <summary>Handles score change events from ScoreManager.</summary>
     private void HandleScoreChanged(int newScore)
     {
-        UpdateScore(newScore);
+        // Score is only shown at Game Over in the minimalist UI.
     }
 
     /// <summary>Handles piece count change events from GameManager.</summary>
     private void HandlePieceCountChanged(int current, int max)
     {
-        UpdatePieceCounter(current, max);
+        // Piece counter is hidden in the minimalist UI.
     }
 
     /// <summary>Handles game over event from GameManager.</summary>
@@ -115,8 +105,6 @@ public class UIManager : MonoBehaviour
     private void HandleGameRestarted()
     {
         HideGameOver();
-        UpdateScore(0);
-        UpdatePieceCounter(0, 6);
     }
 
     /// <summary>Handles restart button click.</summary>
@@ -130,26 +118,6 @@ public class UIManager : MonoBehaviour
 
     // ───────────────────────── UI Updates ────────────────────────────────
 
-    /// <summary>Updates the score display label.</summary>
-    private void UpdateScore(int score)
-    {
-        if (scoreValueLabel != null)
-            scoreValueLabel.text = score.ToString();
-    }
-
-    /// <summary>
-    /// Updates the piece counter label.
-    /// Shows "Piece X / Y" where X is the next piece number (current + 1).
-    /// </summary>
-    private void UpdatePieceCounter(int placed, int max)
-    {
-        if (pieceCounterLabel != null)
-        {
-            int nextPiece = Mathf.Min(placed + 1, max);
-            pieceCounterLabel.text = $"Piece {nextPiece} / {max}";
-        }
-    }
-
     /// <summary>Shows the game over overlay with the final score.</summary>
     private void ShowGameOver(int finalScore)
     {
@@ -158,13 +126,6 @@ public class UIManager : MonoBehaviour
 
         if (gameOverContainer != null)
             gameOverContainer.style.display = DisplayStyle.Flex;
-
-        // Hide the rotate hint
-        if (rotateHintLabel != null)
-            rotateHintLabel.style.display = DisplayStyle.None;
-
-        if (pieceCounterLabel != null)
-            pieceCounterLabel.text = "Game Over!";
     }
 
     /// <summary>Hides the game over overlay.</summary>
@@ -172,9 +133,5 @@ public class UIManager : MonoBehaviour
     {
         if (gameOverContainer != null)
             gameOverContainer.style.display = DisplayStyle.None;
-
-        // Restore the rotate hint
-        if (rotateHintLabel != null)
-            rotateHintLabel.style.display = DisplayStyle.Flex;
     }
 }
