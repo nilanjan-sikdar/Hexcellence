@@ -1,10 +1,12 @@
 using UnityEngine;
 using System;
+using TMPro;
 
 /// <summary>
 /// Represents a single hexagonal cell within the grid.
 /// Stores axial coordinates (Q, R), manages cell state (number value, occupancy),
-/// and provides visual highlight feedback for drag-and-drop interactions.
+/// displays the number via a child TextMeshPro, and provides visual highlight
+/// feedback for drag-and-drop interactions.
 /// Communicates via static C# events for full cross-system decoupling.
 /// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
@@ -13,14 +15,18 @@ public class HexCell : MonoBehaviour
     // ───────────────────────── Serialized Fields ─────────────────────────
 
     [Header("Visual Configuration")]
-    [Tooltip("The default color of this cell when idle.")]
-    [SerializeField] private Color defaultColor = new Color(0.9f, 0.9f, 0.9f, 1f);
+    [Tooltip("The default color of this cell when idle (set by CellVisualController at runtime).")]
+    [SerializeField] private Color defaultColor = new Color(0.5f, 0.5f, 0.5f, 1f);
 
     [Tooltip("The color applied when this cell is highlighted (e.g., valid drop target).")]
-    [SerializeField] private Color highlightColor = new Color(0.5f, 0.95f, 0.55f, 1f);
+    [SerializeField] private Color highlightColor = new Color(0.95f, 0.85f, 0.2f, 1f);
 
     [Tooltip("The color applied when this cell is marked as an invalid target.")]
     [SerializeField] private Color invalidColor = new Color(0.95f, 0.35f, 0.35f, 1f);
+
+    [Header("References")]
+    [Tooltip("Child TextMeshPro component used to display the number value on this cell.")]
+    [SerializeField] private TextMeshPro numberText;
 
     // ───────────────────────── Private Fields ────────────────────────────
 
@@ -96,18 +102,23 @@ public class HexCell : MonoBehaviour
             spriteRenderer = GetComponent<SpriteRenderer>();
 
         spriteRenderer.color = defaultColor;
+
+        // Hide number text initially.
+        UpdateNumberDisplay();
     }
 
     // ───────────────────────── State Management ─────────────────────────
 
     /// <summary>
-    /// Sets the number value on this cell and raises <see cref="OnCellValueChanged"/>.
+    /// Sets the number value on this cell, updates the number display,
+    /// and raises <see cref="OnCellValueChanged"/>.
     /// </summary>
     /// <param name="value">The new number value. Use 0 to mark empty.</param>
     public void SetValue(int value)
     {
         int previousValue = currentValue;
         currentValue = value;
+        UpdateNumberDisplay();
         OnCellValueChanged?.Invoke(this, previousValue, value);
     }
 
@@ -117,6 +128,58 @@ public class HexCell : MonoBehaviour
     public void ClearValue()
     {
         SetValue(0);
+    }
+
+    // ───────────────────────── Number Display ───────────────────────────
+
+    /// <summary>
+    /// Updates the child TextMeshPro component to reflect the current value.
+    /// Shows the number when value > 0, hides it when empty.
+    /// </summary>
+    private void UpdateNumberDisplay()
+    {
+        if (numberText == null) return;
+
+        if (currentValue > 0)
+        {
+            numberText.gameObject.SetActive(true);
+            numberText.text = currentValue.ToString();
+        }
+        else
+        {
+            numberText.gameObject.SetActive(false);
+            numberText.text = "";
+        }
+    }
+
+    /// <summary>
+    /// Directly sets the number display text and visibility.
+    /// Used by external systems for preview/ghost display during drag.
+    /// Does NOT change the cell's actual value.
+    /// </summary>
+    /// <param name="displayValue">The number to display, or 0 to hide.</param>
+    public void SetNumberDisplayPreview(int displayValue)
+    {
+        if (numberText == null) return;
+
+        if (displayValue > 0)
+        {
+            numberText.gameObject.SetActive(true);
+            numberText.text = displayValue.ToString();
+        }
+        else
+        {
+            numberText.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Resets the number display to match the actual current value.
+    /// Called after a preview display is cleared.
+    /// </summary>
+    public void ClearNumberDisplayPreview()
+    {
+        UpdateNumberDisplay();
     }
 
     // ───────────────────────── Visual Feedback ──────────────────────────
@@ -172,6 +235,7 @@ public class HexCell : MonoBehaviour
     /// <summary>
     /// Updates the default resting color for this cell.
     /// Applies immediately only if the cell is not currently highlighted.
+    /// Called by <see cref="CellVisualController"/> when the cell's number changes.
     /// </summary>
     /// <param name="color">The new default color.</param>
     public void SetDefaultColor(Color color)
@@ -188,3 +252,5 @@ public class HexCell : MonoBehaviour
         return $"HexCell [{q}, {r}] Value={currentValue}";
     }
 }
+
+// Refresh

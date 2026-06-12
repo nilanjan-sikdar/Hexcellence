@@ -399,6 +399,35 @@ public class HexGridManager : MonoBehaviour
     }
 
     // ═══════════════════════════════════════════════════════════════════════
+    //  GRID UTILITIES
+    // ═══════════════════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// Resets all cell values to zero without destroying the grid.
+    /// Used by GameManager during game restart.
+    /// </summary>
+    public void ResetAllCellValues()
+    {
+        foreach (KeyValuePair<Vector2Int, HexCell> kvp in cells)
+        {
+            kvp.Value.ClearValue();
+        }
+    }
+
+    /// <summary>
+    /// Calculates the sum of all cell values on the board.
+    /// </summary>
+    public int GetBoardScore()
+    {
+        int score = 0;
+        foreach (KeyValuePair<Vector2Int, HexCell> kvp in cells)
+        {
+            score += kvp.Value.CurrentValue;
+        }
+        return score;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
     //  EDITOR GIZMOS
     // ═══════════════════════════════════════════════════════════════════════
 
@@ -492,3 +521,5 @@ public class HexGridManager : MonoBehaviour
     }
 #endif
 }
+
+// Refresh
