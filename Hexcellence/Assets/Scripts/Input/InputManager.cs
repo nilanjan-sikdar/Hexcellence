@@ -34,8 +34,7 @@ public class InputManager : MonoBehaviour
 
     // ───────────────────────── Events ────────────────────────────────────
 
-    /// <summary>Fired when the player taps the piece (no drag). Used for rotation.</summary>
-    public static event Action OnPieceTapped;
+
 
     /// <summary>Fired when a drag begins on the piece.</summary>
     public static event Action OnDragStarted;
@@ -132,11 +131,7 @@ public class InputManager : MonoBehaviour
                 Vector3 dropPos = worldPos + Vector3.up * dragYOffset;
                 OnDragEnded?.Invoke(dropPos);
             }
-            else
-            {
-                // Was a tap — rotate piece from anywhere
-                OnPieceTapped?.Invoke();
-            }
+            // Tap functionality has been moved to the UI button
 
             isPointerDown = false;
             isDragging = false;
