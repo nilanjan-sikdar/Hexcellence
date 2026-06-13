@@ -1,10 +1,6 @@
-/* ============================================================
-   Hexcellence – Game HUD Stylesheet (Minimalist)
-   ============================================================ */
-
 :root {
-    --color-text: #000000;
-    --color-text-red: #cc0000;
+    --color-text: rgb(0, 0, 0);
+    --color-text-red: rgb(204, 0, 0);
 }
 
 .root {
@@ -13,7 +9,6 @@
     flex-direction: column;
 }
 
-/* ── Game Over Overlay ─────────────────────────────────────── */
 .game-over-container {
     position: absolute;
     left: 0;
@@ -23,11 +18,11 @@
     justify-content: flex-end;
     align-items: center;
     padding-bottom: 50px;
-    display: none; /* Controlled by UIManager */
+    display: none;
 }
 
 .game-over-card {
-    background-color: #dcdcdc; /* Light gray box */
+    background-color: rgb(220, 220, 220);
     border-radius: 12px;
     padding: 20px 40px;
     align-items: center;
@@ -49,7 +44,6 @@
     margin-bottom: 20px;
 }
 
-/* ── Restart Button ────────────────────────────────────────── */
 .restart-button {
     background-color: transparent;
     color: var(--color-text-red);
@@ -58,9 +52,9 @@
 }
 
 .restart-button:hover {
-    color: #ff0000;
+    color: rgb(255, 0, 0);
 }
 
 .restart-button:active {
-    color: #990000;
+    color: rgb(153, 0, 0);
 }

@@ -427,6 +427,22 @@ public class HexGridManager : MonoBehaviour
         return score;
     }
 
+    /// <summary>
+    /// Returns the number of occupied cells on the board.
+    /// </summary>
+    public int GetOccupiedCellCount()
+    {
+        int count = 0;
+        foreach (KeyValuePair<Vector2Int, HexCell> kvp in cells)
+        {
+            if (kvp.Value.IsOccupied)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
     // ═══════════════════════════════════════════════════════════════════════
     //  EDITOR GIZMOS
     // ═══════════════════════════════════════════════════════════════════════

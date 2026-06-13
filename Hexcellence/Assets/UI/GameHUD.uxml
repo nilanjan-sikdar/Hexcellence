@@ -1,18 +1,12 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements">
-  <!-- Link stylesheet -->
-  <Style src="GameHUD.uss" />
-
-  <!-- ROOT -->
-  <ui:VisualElement name="root" class="root">
-
-    <!-- GAME OVER OVERLAY (hidden by default) -->
-    <ui:VisualElement name="game-over-container" class="game-over-container">
-      <ui:VisualElement name="game-over-card" class="game-over-card">
-        <ui:Label text="Score" class="game-over-score-label" />
-        <ui:Label name="final-score-value" text="14" class="final-score-value" />
-        <ui:Button name="restart-button" text="RESTART" class="restart-button" />
-      </ui:VisualElement>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GameHUD.uss?fileID=7433441132597879392&amp;guid=22f0d9d8d08264f4ea5abbbbca8dcb59&amp;type=3#GameHUD"/>
+    <ui:VisualElement name="root" class="root">
+        <ui:VisualElement name="game-over-container" class="game-over-container">
+            <ui:VisualElement name="game-over-card" class="game-over-card">
+                <ui:Label text="Score" class="game-over-score-label"/>
+                <ui:Label name="final-score-value" text="14" class="final-score-value"/>
+                <ui:Button name="restart-button" text="RESTART" class="restart-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
-
-  </ui:VisualElement>
 </ui:UXML>

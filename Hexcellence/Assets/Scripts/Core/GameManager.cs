@@ -85,7 +85,6 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.OnPieceTapped += HandlePieceTapped;
         InputManager.OnDragStarted += HandleDragStarted;
         InputManager.OnDragMoved += HandleDragMoved;
         InputManager.OnDragEnded += HandleDragEnded;
@@ -94,7 +93,6 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        InputManager.OnPieceTapped -= HandlePieceTapped;
         InputManager.OnDragStarted -= HandleDragStarted;
         InputManager.OnDragMoved -= HandleDragMoved;
         InputManager.OnDragEnded -= HandleDragEnded;
@@ -168,15 +166,17 @@ public class GameManager : MonoBehaviour
     // ───────────────────────── Input Handlers ───────────────────────────
 
     /// <summary>
-    /// Handles a tap on the piece — rotates it one step clockwise.
+    /// Rotates the current piece, invoked from UI or input.
     /// </summary>
-    private void HandlePieceTapped()
+    public void RotateCurrentPiece()
     {
         if (currentState != GameState.WaitingForInput) return;
         if (currentPiece == null) return;
 
         currentPiece.Rotate();
     }
+
+
 
     /// <summary>
     /// Handles drag start — transitions to Dragging state.
@@ -277,8 +277,8 @@ public class GameManager : MonoBehaviour
         piecesPlaced++;
         OnPieceCountChanged?.Invoke(piecesPlaced, maxPieces);
 
-        // Check for game over
-        if (piecesPlaced >= maxPieces)
+        // Check for game over based on occupied grid cells
+        if (gridManager.GetOccupiedCellCount() >= maxPieces)
         {
             TriggerGameOver();
         }

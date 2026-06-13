@@ -111,7 +111,7 @@ public class NumberColorPalette : ScriptableObject
             return fallbackGradient.Evaluate(normalizedValue);
         }
 
-        return Color.white;
+        return new Color(0.2f, 0.2f, 0.2f, 1f);
     }
 
     /// <summary>

@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     private VisualElement gameOverContainer;
     private Label finalScoreValueLabel;
     private Button restartButton;
+    private Button rotateButton;
 
     // ───────────────────────── Unity Lifecycle ───────────────────────────
 
@@ -50,6 +51,9 @@ public class UIManager : MonoBehaviour
 
         if (restartButton != null)
             restartButton.clicked -= OnRestartButtonClicked;
+
+        if (rotateButton != null)
+            rotateButton.clicked -= OnRotateButtonClicked;
     }
 
     // ───────────────────────── UI Binding ────────────────────────────────
@@ -70,11 +74,18 @@ public class UIManager : MonoBehaviour
         gameOverContainer = root.Q<VisualElement>("game-over-container");
         finalScoreValueLabel = root.Q<Label>("final-score-value");
         restartButton = root.Q<Button>("restart-button");
+        rotateButton = root.Q<Button>("rotate-button");
 
         // Bind restart button
         if (restartButton != null)
         {
             restartButton.clicked += OnRestartButtonClicked;
+        }
+
+        // Bind rotate button
+        if (rotateButton != null)
+        {
+            rotateButton.clicked += OnRotateButtonClicked;
         }
 
         // Ensure game over is hidden at start
@@ -113,6 +124,15 @@ public class UIManager : MonoBehaviour
         if (gameManager != null)
         {
             gameManager.RestartGame();
+        }
+    }
+
+    /// <summary>Handles rotate button click.</summary>
+    private void OnRotateButtonClicked()
+    {
+        if (gameManager != null)
+        {
+            gameManager.RotateCurrentPiece();
         }
     }
 
