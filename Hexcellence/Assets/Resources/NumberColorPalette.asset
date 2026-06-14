@@ -37,7 +37,7 @@ MonoBehaviour:
     color: {r: 0.6, g: 0.4, b: 0, a: 1}
   - number: 1024
     color: {r: 0.6, g: 0, b: 0.6, a: 1}
-  emptyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  emptyColor: {r: 0.15, g: 0.35, b: 0.75, a: 0.5}
   fallbackGradient:
     serializedVersion: 2
     key0: {r: 0.4, g: 0.4, b: 0.4, a: 1}

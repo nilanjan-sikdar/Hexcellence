@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378bec338f2aaa24bb2bde1cca54478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HexGridManager
-  columns: 5
+  columns: 4
   rows: 4
   outerRadius: 1
   cellPrefab: {fileID: 2925658184686198075, guid: 2257911300952c7468b163a915dc8149, type: 3}
